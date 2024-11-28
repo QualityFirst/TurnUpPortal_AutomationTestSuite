@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using NUnit.Framework;
+using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using SeleniumExtras.WaitHelpers;
 
@@ -102,16 +103,9 @@ namespace TurnUpPortal_AutomationTestSuite.Pages
             Thread.Sleep(2000);
 
             IWebElement lastCustomerElement = driver.FindElement(By.XPath("//*[@id=\"clientsGrid\"]/div[2]/table/tbody/tr[last()]/td[2]"));
-            if (lastCustomerElement.Text == "N-Customer")
-            {
-                Console.WriteLine("Customer Record created successfully. Test Passed");
-            }
-            else
-            {
-                Console.WriteLine("Customer record not created. Test Failed");
-            }
-
+            Assert.That(lastCustomerElement.Text == "N-Customer", "Customer record not created. Test Failed");
         }
+
         public void EditCustomersRecord(IWebDriver driver)
         {
             // click edit
@@ -220,18 +214,10 @@ namespace TurnUpPortal_AutomationTestSuite.Pages
 
             IWebElement lastCustomerElementt = driver.FindElement(By.XPath("//*[@id=\"clientsGrid\"]/div[2]/table/tbody/tr[last()]/td[2]"));
 
-            if (lastCustomerElementt.Text == "Edited Name")
-            {
-                Console.WriteLine("Customer Record updated successfully. Test Passed");
-            }
-            else
-            {
-                Console.WriteLine("Customer record not updted. Test Failed");
-            }
-
+            Assert.That(lastCustomerElementt.Text == "Edited Name", "Customer record not updted. Test Failed");
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(By.CssSelector(".k-loading-image")));
-
         }
+
         public void DeleteCustomersRecord(IWebDriver driver)
         {
             //Delete newly added customer
@@ -247,14 +233,7 @@ namespace TurnUpPortal_AutomationTestSuite.Pages
 
             IWebElement checkLastRecord = driver.FindElement(By.XPath("//*[@id=\"clientsGrid\"]/div[2]/table/tbody/tr[last()]/td[2]"));
 
-            if (checkLastRecord.Text != "Edited Name")
-            {
-                Console.WriteLine("Customer record is deleted successfully. Test Passed");
-            }
-            else
-            {
-                Console.WriteLine("Customer record is not deleted successfully. Test Failed");
-            }
+            Assert.That(checkLastRecord.Text != "Edited Name", "Customer record is not deleted successfully. Test Failed");
         }
     }
 }
